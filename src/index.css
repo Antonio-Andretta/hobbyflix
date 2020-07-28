@@ -24,3 +24,9 @@ a {
   color: inherit;
 }
 
+#root {
+  min-height: calc(100vh - var(--bodyPaddingTop));
+  background: rgb(72, 24, 82);
+  display: flex;
+  flex-direction: column;
+}
