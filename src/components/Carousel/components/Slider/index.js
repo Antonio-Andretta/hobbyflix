@@ -22,7 +22,7 @@ const Container = styled.ul`
   }
   
   .slick-prev {
-    color: orange;
+  
     left: 0;
   }
   .slick-next {

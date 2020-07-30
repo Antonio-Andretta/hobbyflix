@@ -9,25 +9,24 @@ function Home() {
   return (
     <div >
       <Menu />
-      
       <BannerMain 
         videoTitle={dadosIniciais.categorias[0].videos[0].titulo} 
         url={dadosIniciais.categorias[0].videos[0].url}
-        videoDescription={"O que é Front-End? Trabalhando na área..."} 
+        videoDescription={'O que é Front-End? Trabalhando na área...'}
       />
 
       <Carousel
         category={dadosIniciais.categorias[0]}
       />
 
-     <Carousel
+      <Carousel
         category={dadosIniciais.categorias[1]}
       />
 
       <Carousel
         category={dadosIniciais.categorias[2]}
       />
-       <Carousel
+      <Carousel
         category={dadosIniciais.categorias[3]}
       />
 
@@ -40,7 +39,7 @@ function Home() {
       />
 
       <Footer />
-      
+
     </div>
   );
 }
