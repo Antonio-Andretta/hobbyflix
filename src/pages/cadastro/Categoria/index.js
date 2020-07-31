@@ -30,7 +30,7 @@ function CadastroCategoria() {
   }
 
   useEffect(() => {
-    const URL =  window.location.href.includes('localhost') 
+    const URL = window.location.href.includes('localhost') 
       ? 'http://localhost:8080/categorias' 
       : 'https://hobbyflix.herokuapp.com/categorias' ;
     fetch(URL)
