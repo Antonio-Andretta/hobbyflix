@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 function CadastroCategoria() {
   const valoresIniciais = {
@@ -11,23 +12,8 @@ function CadastroCategoria() {
     descricao: '',
     cor: '#000000',
   };
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
   const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
-
-  function setValue(chave, valor) {
-    // chave: nome, descricao, bla, bli
-    setValues({
-      ...values,
-      [chave]: valor, // nome: 'valor'
-    });
-  }
-
-  function handleChange(infosDoEvento) {
-    setValue(
-      infosDoEvento.target.getAttribute('name'),
-      infosDoEvento.target.value,
-    );
-  }
 
   useEffect(() => {
     const URL = window.location.href.includes('localhost')
@@ -47,7 +33,7 @@ function CadastroCategoria() {
     <PageDefault>
       <h1>
         Cadastro de Categoria:
-        {values.nome}
+        {values.titulo}
       </h1>
 
       <form onSubmit={function handleSubmit(infosDoEvento) {
@@ -57,15 +43,14 @@ function CadastroCategoria() {
           values,
         ]);
 
-        setValues(valoresIniciais);
+        clearForm();
       }}
       >
-
         <FormField
-          label="Nome da Categoria"
+          label="Título Categoria"
           type="text"
-          name="nome"
-          value={values.nome}
+          name="Titulo"
+          value={values.titulo}
           onChange={handleChange}
         />
 
@@ -90,10 +75,16 @@ function CadastroCategoria() {
         </Button>
       </form>
 
+      {categorias.length === 0 && (
+        <div>
+          Loading...
+        </div>
+      )}
+
       <ul>
         {categorias.map((categoria) => (
-          <li key={`${categoria.nome}`}>
-            {categoria.nome}
+          <li key={`${categoria.titulo}`}>
+            {categoria.titulo}
           </li>
         ))}
       </ul>

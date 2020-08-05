@@ -1,100 +1,89 @@
-import React , { useState }  from 'react';
-import { Link } from 'react-router-dom';
+
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
+import useForm from '../../../hooks/useForm';
 import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
+import videosRepository from '../../../data/repositories/videos';
+import categoriasRepository from '../../../data/repositories/categorias';
 
+function CadastroVideo() {
+  const history = useHistory();
+  const [categorias, setCategorias] = useState([]);
+  const categoryTitles = categorias.map(({ titulo }) => titulo);
+  const { handleChange, values } = useForm({
+    titulo: 'Video padrão',
+    url: 'https://www.youtube.com/watch?v=jOAU81jdi-c',
+    categoria: 'Front End',
+  });
 
-function CadastroVideo () {
-  const filmObj = {
-    titulo: '',
-    categoria: '',
-    cor: '#000000',
-    desricao: ''
-  }
-  //const [categorias, setCategorias] = useState([]);
-  const [films, setFilms] = useState([]);
-  const [values, setValues] = useState(filmObj);
+  useEffect(() => { 
+    categoriasRepository 
+      .getAll()
+      .then((categoriasFromServer) => {
+        setCategorias(categoriasFromServer);
+      });
+  }, []);
 
-  function setValue(chave, valor) {
-    // chave: nome, descricao, bla, bli
-    setValues({
-      ...values,
-      [chave]: valor, // nome: 'valor'
-    })
-  }
+  return (
+    <PageDefault>
+      <h1>Cadastro de Video</h1>
 
-  function handleChange(infosDoEvento) {
-    setValue(
-      infosDoEvento.target.getAttribute('name'),
-      infosDoEvento.target.value
-    );
-  }
-    return (
-      <PageDefault>
-        <h1>Cadastro de Video</h1> 
-      <form  onSubmit={function handleSubmit(infosDoEvento) {
-          infosDoEvento.preventDefault();
-          setFilms([
-            ...films,
-            values
-          ]);
-          
-          setValues(filmObj)
-      }}> 
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        // alert('Video Cadastrado com sucesso!!!1!');
 
+        const categoriaEscolhida = categorias.find((categoria) => {
+          return categoria.titulo === values.categoria;
+        });
+
+        videosRepository.create({
+          titulo: values.titulo,
+          url: values.url,
+          categoriaId: categoriaEscolhida.id,
+        })
+          .then(() => {
+            console.log('Cadastrou com sucesso!');
+            history.push('/');
+          });
+      }}
+      >
         <FormField
-          label="Titulo"
-          type="text"
+          label="Título do Vídeo"
           name="titulo"
           value={values.titulo}
           onChange={handleChange}
-        /> 
+        />
+
+        <FormField
+          label="URL"
+          name="url"
+          value={values.url}
+          onChange={handleChange}
+        />
 
         <FormField
           label="Categoria"
-          type="text"
           name="categoria"
           value={values.categoria}
           onChange={handleChange}
+          suggestions={categoryTitles}
         />
 
-        <FormField
-          label="Cor"
-          type="color"
-          name="cor"
-          value={values.cor}
-          onChange={handleChange}
-        />
-        <FormField
-          label="Descrição"
-          type="textearea"
-          name="descricao"
-          value={values.descricao}
-          onChange={handleChange}
-        />
-
-        <button>
+        <Button type="submit">
           Cadastrar
-        </button>
+        </Button>
       </form>
-      
 
-      <ul>
-        {films.map((films, indice) => {
-          return (
-            <li key={`${films}${indice}`}>
-              {films.titulo}
-          </li> 
-          )
-        })}
-      </ul>
+      <br />
+      <br />
 
+      <Link to="/cadastro/categoria">
+        Cadastrar Categoria
+      </Link>
+    </PageDefault>
+  );
+}
 
-        <Link to="/cadastro/categoria" >
-            Cadastrar Categoria
-        </Link>
-      </PageDefault>
-    )
-  }
-
-  export default CadastroVideo;
+export default CadastroVideo;
