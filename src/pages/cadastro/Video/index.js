@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
@@ -18,14 +17,14 @@ function CadastroVideo() {
     categoria: 'Front End',
   });
 
-  useEffect(() => { 
-    categoriasRepository 
-      .getAll()
+  useEffect(() => {
+    categoriasRepository.getAll()
       .then((categoriasFromServer) => {
         setCategorias(categoriasFromServer);
       });
   }, []);
 
+  console.log(categoryTitles);
   return (
     <PageDefault>
       <h1>Cadastro de Video</h1>
@@ -34,9 +33,7 @@ function CadastroVideo() {
         event.preventDefault();
         // alert('Video Cadastrado com sucesso!!!1!');
 
-        const categoriaEscolhida = categorias.find((categoria) => {
-          return categoria.titulo === values.categoria;
-        });
+        const categoriaEscolhida = categorias.find((categoria) => categoria.titulo === values.categoria);
 
         videosRepository.create({
           titulo: values.titulo,

@@ -113,14 +113,15 @@ function FormField({
 FormField.defaultProps = {
   type: 'text',
   value: '',
-  suggestions: []
+  onChange: () => {},
+  suggestions: [],
 };
 FormField.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   suggestions: PropTypes.arrayOf(PropTypes.string),
 };
 
