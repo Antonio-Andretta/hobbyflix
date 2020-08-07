@@ -70,6 +70,12 @@
       "id": 10,
       "titulo": "AeroModelismo",
       "cor": "yellow"
+    },
+    {
+      "titulo": "Culinaria",
+      "descricao": "Receitas deliciosas para o seu Dia a Dia",
+      "cor": "#4db937",
+      "id": 11
     }
   ],
   "videos": [
@@ -258,6 +264,12 @@
       "url": "https://www.youtube.com/watch?v=8dX0vAEFG6M",
       "categoriaId": 7,
       "id": 31
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=jOAU81jdi-c",
+      "categoriaId": 1,
+      "id": 32
     }
   ]
 }

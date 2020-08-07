@@ -5,6 +5,7 @@ import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
 import useForm from '../../../hooks/useForm';
+import categoriasRepository from '../../../data/repositories/categorias';
 
 function CadastroCategoria() {
   const valoresIniciais = {
@@ -29,6 +30,7 @@ function CadastroCategoria() {
         throw new Error('Não foi possível pegar os dados');
       });
   }, []);
+
   return (
     <PageDefault>
       <h1>
@@ -42,14 +44,22 @@ function CadastroCategoria() {
           ...categorias,
           values,
         ]);
+        categoriasRepository.create ({
+          titulo: values.titulo,
+          descricao: values.descricao,
+          cor: values.cor,
 
-        clearForm();
+        }) 
+          .then(() => {
+            console.log('Cadastrou com sucesso!');
+            clearForm();
+          });
       }}
       >
         <FormField
           label="Título Categoria"
           type="text"
-          name="Titulo"
+          name="titulo"
           value={values.titulo}
           onChange={handleChange}
         />
@@ -70,7 +80,7 @@ function CadastroCategoria() {
           onChange={handleChange}
         />
 
-        <Button>
+        <Button >
           Cadastrar
         </Button>
       </form>
